@@ -1,0 +1,57 @@
+# create a provider named ne that points to the natural earth geopkg
+[[providers]]
+  name = "ne"
+  type = "gpkg"
+  filepath = "./ne.gpkg"
+
+  # the 110m layer we used previously
+  [[providers.layers]]
+    # it's conventional to use the table name as the provider layer name
+    # but not necessary
+    name = "ne_110m_coastline"
+    tablename = "ne_110m_coastline"
+
+  # the 50m layer for medium zooms
+  [[providers.layers]]
+    name = "ne_50m_coastline"
+    tablename = "ne_50m_coastline"
+
+  # the 10m layer for high zooms
+  [[providers.layers]]
+    name = "ne_10m_coastline"
+    tablename = "ne_10m_coastline"
+
+# create a map named natural
+[[maps]]
+  name = "natural"
+
+  # here we assign three different provider layers to the coastline map layer
+  #
+  # a client can style the coastline layer without having to concern itself
+  # with this optimization
+
+  # the 110 meter geometries will only be returned for tiles in zooms between
+  # 0 and 2, inclusive
+  [[maps.layers]]
+    name = "coastline"
+    min_zoom = 0
+    max_zoom = 2
+    provider_layer = "ne.ne_110m_coastline"
+
+  # the 50 meter geometries will only be returned for tiles in zooms between
+  # 3 and 4, inclusive
+  [[maps.layers]]
+    name = "coastline"
+    min_zoom = 3
+    max_zoom = 4
+    provider_layer = "ne.ne_50m_coastline"
+
+  # the 10 meter geometries will only be returned for tiles in zooms between
+  # 5 and 10, inclusive. Note that clients can still show the geometry at
+  # zooms higher than 10 by scaling the level 10 geometries.
+  [[maps.layers]]
+    name = "coastline"
+    min_zoom = 5
+    max_zoom = 10
+    provider_layer = "ne.ne_10m_coastline"
+

@@ -1,0 +1,22 @@
+# create a provider named ne that points to the natural earth geopkg
+[[providers]]
+  name = "ne"
+  type = "gpkg"
+  filepath = "./ne.gpkg"
+
+  # tell tegola there's a table called ne_110m_coastline in the geopkg and
+  # that it can be referenced with the name "coastline" in the map layers
+  [[providers.layers]]
+    name = "coastline"
+    tablename = "ne_110m_coastline"
+
+# create a map named natural
+[[maps]]
+  name = "natural"
+
+  # the map has one layer named coastline which is exposed to the outside
+  # world. The layer consists only of data from the coastline layer of the
+  # ne provider (note the dot syntax).
+  [[maps.layers]]
+    name = "coastline"
+    provider_layer = "ne.coastline"
